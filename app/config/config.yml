@@ -48,6 +48,14 @@ doctrine:
         charset:  UTF8
         # Custom mapping types are registered in ShopBundle::boot() method
 
+        types:
+            customer_cart_items:
+                class: Dumplie\Customer\Infrastructure\Doctrine\ORM\Type\Domain\CartItemsType
+                commented: true
+            customer_order_items:
+                class: Dumplie\Customer\Infrastructure\Doctrine\ORM\Type\Domain\OrderItemsType
+                commented: true
+
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -65,6 +73,12 @@ doctrine:
                 is_bundle: false
                 prefix: Dumplie\Inventory\Domain
                 alias: DumplieInventory
+            Customer:
+                type: xml
+                dir: '%dumplie.root_dir%/Customer/Infrastructure/Doctrine/ORM/Resources/Mapping/Domain'
+                is_bundle: false
+                prefix: Dumplie\Customer\Domain
+                alias: Customer
 
 metadata:
   storage:

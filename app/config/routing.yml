@@ -8,3 +8,8 @@ inventory:
     type:     annotation
     prefix:   /
 
+cart:
+    resource: "@ShopBundle/Controller/CartController.php"
+    type:     annotation
+    prefix:   /
+

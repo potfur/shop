@@ -1,0 +1,53 @@
+{% extends ':customer:base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>{{ 'customer.cart.list.header'|trans }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        {{ 'customer.cart.list.header.name'|trans }}
+                    </th>
+                    <th>
+                        {{ 'customer.cart.list.header.quantity'|trans }}
+                    </th>
+                    <th>
+                        {{ 'customer.cart.list.header.price'|trans }}
+                    </th>
+                    <th>
+                        {{ 'customer.cart.list.header.actions'|trans }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart.items %}
+                    <tr>
+                        <td>{{ item.sku }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price|number_format(2, '.', ',') }} {{ item.currency }}</td>
+                        <td>
+                            <a href="{{ url('dumplie_cart_remove', { sku:item.sku} ) }}">
+                                {{ 'customer.cart.list.remove' }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>{{ 'customer.cart.list.total'|trans }}</th>
+                    <th>{{ cart.totalQuantity }}</th>
+                    <th>{{ cart.totalPrice|number_format(2, '.', ',') }} {{ cart.currency }}</th>
+                    <th></th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+{% endblock %}

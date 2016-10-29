@@ -11,4 +11,17 @@
             <h4>Price: {{ product.price|number_format(2, '.', ',') }} {{ product.currency }}</h4>
         </div>
     </div>
+    <div class="row">
+        {{ form_start(form) }}
+        {{ form_row(form.sku) }}
+        <div class="col-lg-5">
+            {{ form_row(form.quantity) }}
+        </div>
+        <div class="col-lg-6 ">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="{{ 'product.form.add_to_cart'|trans }}">
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

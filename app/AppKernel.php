@@ -41,6 +41,9 @@ class AppKernel extends Kernel
 
             new \Dumplie\Inventory\Application\Extension\CoreExtension(),
             new \Dumplie\Inventory\Infrastructure\Doctrine\DoctrineExtension($entityManagerId, $connectionId),
+
+            new \Dumplie\Customer\Application\Extension\CoreExtension(),
+            new \Dumplie\Customer\Infrastructure\Doctrine\DoctrineExtension($entityManagerId, $connectionId),
         ];
     }
 
