@@ -60,7 +60,8 @@ class CustomerTestCase extends WebTestCase
     public function query() : DbalCartQuery
     {
         return new DbalCartQuery(
-            $this->getContainer()->get('database_connection')
+            $this->getContainer()->get('database_connection'),
+            $this->getContainer()->get(Services::KERNEL_METADATA_ACCESS_REGISTRY)
         );
     }
 

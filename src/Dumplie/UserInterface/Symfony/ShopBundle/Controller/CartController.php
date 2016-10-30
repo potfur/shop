@@ -9,6 +9,7 @@ use Dumplie\Customer\Application\Exception\QueryException;
 use Dumplie\Customer\Application\Query\Result\Cart;
 use Dumplie\Customer\Application\Services as CustomerServices;
 use Dumplie\Customer\Domain\CartId;
+use Dumplie\Customer\Domain\Exception\CartNotFoundException;
 use Dumplie\SharedKernel\Application\Services;
 use Dumplie\UserInterface\Symfony\ShopBundle\Form\Customer\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,8 +40,6 @@ class CartController extends Controller
             $this->get(Services::KERNEL_COMMAND_BUS)->handle($command);
         }
 
-        // TODO - back to product if form fails?
-
         return $this->redirect($this->generateUrl('dumplie_cart'));
     }
 
@@ -50,7 +49,7 @@ class CartController extends Controller
      */
     public function removeProductAction(Request $request, string $sku)
     {
-        $cartId = $this->ensureCartId();
+        $cartId = $this->getCartId();
 
         $command = new RemoveFromCart($cartId, $sku);
         $this->get(Services::KERNEL_COMMAND_BUS)->handle($command);
@@ -62,37 +61,40 @@ class CartController extends Controller
      * @Route("/cart", name="dumplie_cart")
      * @Method({"GET"})
      */
-    public function cartAction(Request $request)
-    {
-        return $this->render(':customer/cart:index.html.twig', ['cart' => $this->getCart()]);
-    }
-
-    // TODO - extract getCart and ensureCartId into separate CartStash object
-
-    private function getCart(): Cart
+    public function cartAction()
     {
         try {
-            $cartId = $this->get('session')->get('cartId');
-            return $this->get(CustomerServices::CUSTOMER_CART_QUERY)->getById($cartId);
-        } catch (QueryException $e) {
-            return new Cart();
+            $cart = $this->get(CustomerServices::CUSTOMER_CART_QUERY)->getById($this->getCartId());
+        } catch (CartNotFoundException $e) {
+            $cart = new Cart();
         }
+
+        return $this->render(':customer/cart:index.html.twig', ['cart' => $cart]);
     }
 
-    private function ensureCartId() : string
+    private function getCartId(): string
     {
         $cartId = $this->get('session')->get('cartId');
 
         if (null !== $cartId && $this->get(CustomerServices::CUSTOMER_CART_QUERY)->doesCartWithIdExist($cartId)) {
-            return new CartId($cartId);
+            return $cartId;
         }
 
-        $cartId = CartId::generate();
-        $command = new CreateCart($cartId, $this->getParameter('dumplie_currency'));
+        throw new CartNotFoundException('Cart not found');
+    }
 
-        $this->get(Services::KERNEL_COMMAND_BUS)->handle($command);
-        $this->get('session')->set('cartId', (string) $cartId);
+    private function ensureCartId() : string
+    {
+        try {
+            return $this->getCartId();
+        } catch (CartNotFoundException $e) {
+            $cartId = CartId::generate();
+            $command = new CreateCart($cartId, $this->getParameter('dumplie_currency'));
 
-        return (string) $cartId;
+            $this->get(Services::KERNEL_COMMAND_BUS)->handle($command);
+            $this->get('session')->set('cartId', (string) $cartId);
+
+            return (string) $cartId;
+        }
     }
 }

@@ -28,7 +28,7 @@
                 <tbody>
                 {% for item in cart.items %}
                     <tr>
-                        <td>{{ item.sku }}</td>
+                        <td>{{ item.metadata.name }} ({{ item.sku }})</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.price|number_format(2, '.', ',') }} {{ item.currency }}</td>
                         <td>
