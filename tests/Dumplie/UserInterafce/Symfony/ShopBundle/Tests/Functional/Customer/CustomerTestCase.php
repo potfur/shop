@@ -5,6 +5,7 @@ declare (strict_types = 1);
 namespace Dumplie\UserInterafce\Symfony\ShopBundle\Tests\Functional\Customer;
 
 use Dumplie\Customer\Infrastructure\Doctrine\Dbal\Query\DbalCartQuery;
+use Dumplie\Customer\Tests\Doctrine\ORMCustomerContext;
 use Dumplie\Inventory\Tests\Doctrine\ORMInventoryContext;
 use Dumplie\SharedKernel\Application\CommandBus;
 use Dumplie\SharedKernel\Application\Services;
@@ -20,7 +21,12 @@ class CustomerTestCase extends WebTestCase
     /**
      * @var ORMInventoryContext
      */
-    protected $dbContext;
+    protected $inventoryContext;
+
+    /**
+     * @var ORMCustomerContext
+     */
+    protected $customerContext;
 
     public function setUp()
     {
@@ -32,32 +38,48 @@ class CustomerTestCase extends WebTestCase
         $this->dropSchema($em);
         $this->createSchema($em);
 
-        $this->dbContext = new ORMInventoryContext(
+        $this->inventoryContext = new ORMInventoryContext(
             $em,
             new InMemoryEventLog(),
-            new class($commandBus) implements CommandBusFactory
-            {
-                private $commandBus;
-
-                public function __construct(CommandBus $commandBus)
-                {
-                    $this->commandBus = $commandBus;
-                }
-
-                public function create(array $handlers = [], array $commandExtension = []) : CommandBus
-                {
-                    return $this->commandBus;
-                }
-            }
+            $this->createCommandBusFactory($commandBus)
         );
 
-        $this->dbContext->addProduct('DUMPLIE_SKU', 100, 'USD', true);
+        $this->customerContext = new ORMCustomerContext(
+            $em,
+            new InMemoryEventLog(),
+            $this->createCommandBusFactory($commandBus)
+        );
+
+        $this->inventoryContext->addProduct('DUMPLIE_SKU', 100, 'USD', true);
+    }
+
+    /**
+     * @param CommandBus $commandBus
+     *
+     * @return CommandBusFactory
+     */
+    private function createCommandBusFactory(CommandBus $commandBus): CommandBusFactory
+    {
+        return new class($commandBus) implements CommandBusFactory
+        {
+            private $commandBus;
+
+            public function __construct(CommandBus $commandBus)
+            {
+                $this->commandBus = $commandBus;
+            }
+
+            public function create(array $handlers = [], array $commandExtension = []): CommandBus
+            {
+                return $this->commandBus;
+            }
+        };
     }
 
     /**
      * @return DbalCartQuery
      */
-    public function query() : DbalCartQuery
+    public function query(): DbalCartQuery
     {
         return new DbalCartQuery(
             $this->getContainer()->get('database_connection'),

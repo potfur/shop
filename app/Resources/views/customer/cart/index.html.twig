@@ -26,15 +26,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in cart.items %}
+                {% for item in itemForms %}
                     <tr>
-                        <td>{{ item.metadata.name }} ({{ item.sku }})</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.price|number_format(2, '.', ',') }} {{ item.currency }}</td>
+                        <td>{{ item.vars.value.metadata.name }} ({{ item.vars.value.sku }})</td>
+                        <td>{{ item.vars.value.quantity }}</td>
+                        <td>{{ item.vars.value.price|number_format(2, '.', ',') }} {{ item.vars.value.currency }}</td>
                         <td>
-                            <a href="{{ url('dumplie_cart_remove', { sku:item.sku} ) }}">
-                                {{ 'customer.cart.list.remove' }}
-                            </a>
+                            {{ form_start(item) }}
+                            {{ form_row(item.sku) }}
+                            <input type="submit" class="btn btn-primary" value="{{ 'customer.cart.list.remove'|trans }}">
+                            {{ form_end(item) }}
                         </td>
                     </tr>
                 {% endfor %}

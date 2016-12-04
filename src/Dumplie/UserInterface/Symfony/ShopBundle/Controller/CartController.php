@@ -9,8 +9,8 @@ use Dumplie\Customer\Application\Exception\QueryException;
 use Dumplie\Customer\Application\Query\Result\Cart;
 use Dumplie\Customer\Application\Services as CustomerServices;
 use Dumplie\Customer\Domain\CartId;
-use Dumplie\Customer\Domain\Exception\CartNotFoundException;
 use Dumplie\SharedKernel\Application\Services;
+use Dumplie\UserInterface\Symfony\ShopBundle\Form\Customer\CartItemType;
 use Dumplie\UserInterface\Symfony\ShopBundle\Form\Customer\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -45,7 +45,7 @@ class CartController extends Controller
 
     /**
      * @Route("/cart/{sku}", name="dumplie_cart_remove")
-     * @Method({"GET", "DELETE"})
+     * @Method({"DELETE"})
      */
     public function removeProductAction(Request $request, string $sku)
     {
@@ -65,13 +65,40 @@ class CartController extends Controller
     {
         try {
             $cart = $this->get(CustomerServices::CUSTOMER_CART_QUERY)->getById($this->getCartId());
-        } catch (CartNotFoundException $e) {
-            $cart = new Cart();
+        } catch (QueryException $e) {
+            $cart = new Cart($this->getParameter('dumplie_currency'));
         }
 
-        return $this->render(':customer/cart:index.html.twig', ['cart' => $cart]);
+        $itemForms = [];
+        foreach ($cart->items() as $item) {
+            $form = $this->createForm(
+                CartItemType::class,
+                [
+                    'sku' => $item->sku(),
+                    'metadata' => $item->metadata(),
+                    'quantity' => $item->quantity(),
+                    'price' => $item->price(),
+                    'currency' => $item->currency(),
+                ],
+                [
+                    'action' => $this->generateUrl('dumplie_cart_remove', ['sku' => $item->sku()]),
+                    'method' => 'DELETE'
+                ]
+            );
+
+            $itemForms[] = $form->createView();
+        }
+
+        return $this->render(':customer/cart:index.html.twig', [
+            'cart' => $cart,
+            'itemForms' => $itemForms
+        ]);
     }
 
+    /**
+     * @return string
+     * @throws QueryException
+     */
     private function getCartId(): string
     {
         $cartId = $this->get('session')->get('cartId');
@@ -80,14 +107,17 @@ class CartController extends Controller
             return $cartId;
         }
 
-        throw new CartNotFoundException('Cart not found');
+        throw QueryException::cartNotFound($cartId);
     }
 
+    /**
+     * @return string
+     */
     private function ensureCartId() : string
     {
         try {
             return $this->getCartId();
-        } catch (CartNotFoundException $e) {
+        } catch (QueryException $e) {
             $cartId = CartId::generate();
             $command = new CreateCart($cartId, $this->getParameter('dumplie_currency'));
 
