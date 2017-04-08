@@ -36,4 +36,23 @@ class CartPage extends BasePage
 
         return $redirect;
     }
+
+    public function followCheckoutLink(): NewCheckoutPage
+    {
+        $link = $this->getCrawler()->filter("a[href$='checkout']")->link();
+        $this->client->click($link);
+
+        $status = $this->client->getResponse()->getStatusCode();
+        if ($status !== 302) {
+            throw new \RuntimeException(sprintf("Unexpected status code: %d", $status));
+        }
+
+        $redirect = new NewCheckoutPage($this->client, $this);
+        $location = $this->client->getResponse()->headers->get('location');
+        if ($location !== $redirect->getUrl()) {
+            throw new \RuntimeException(sprintf("Unexpected redirect url: %s", $location));
+        }
+
+        return $redirect;
+    }
 }

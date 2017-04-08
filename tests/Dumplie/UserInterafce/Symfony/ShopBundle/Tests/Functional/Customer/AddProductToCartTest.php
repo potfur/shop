@@ -17,7 +17,7 @@ class AddProductToCartTest extends CustomerTestCase
             ->shouldBeRedirectedTo("/cart");
 
         $cartId = $this->client->getContainer()->get('session')->get('cartId');
-        $totalQuantity = $this->query()->getById($cartId)->totalQuantity();
+        $totalQuantity = $this->cartQuery()->getById($cartId)->totalQuantity();
 
         $this->assertTrue($totalQuantity == 2);
     }

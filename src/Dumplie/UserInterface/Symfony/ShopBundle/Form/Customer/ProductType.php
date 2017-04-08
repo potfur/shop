@@ -21,7 +21,7 @@ final class ProductType extends AbstractType
             ]
         ]);
         $builder->add('quantity', IntegerType::class, [
-            'label' => 'product.cart.form.quantity.label',
+            'label' => 'customer.product.form.quantity.label',
             'data' => 1,
             'constraints' => [
                 new GreaterThanOrEqual(['value' => 1]),

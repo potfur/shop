@@ -5,6 +5,7 @@ declare (strict_types = 1);
 namespace Dumplie\UserInterafce\Symfony\ShopBundle\Tests\Functional\Customer;
 
 use Dumplie\Customer\Infrastructure\Doctrine\Dbal\Query\DbalCartQuery;
+use Dumplie\Customer\Infrastructure\Doctrine\Dbal\Query\DbalCheckoutQuery;
 use Dumplie\Customer\Tests\Doctrine\ORMCustomerContext;
 use Dumplie\Inventory\Tests\Doctrine\ORMInventoryContext;
 use Dumplie\SharedKernel\Application\CommandBus;
@@ -79,11 +80,21 @@ class CustomerTestCase extends WebTestCase
     /**
      * @return DbalCartQuery
      */
-    public function query(): DbalCartQuery
+    public function cartQuery(): DbalCartQuery
     {
         return new DbalCartQuery(
             $this->getContainer()->get('database_connection'),
             $this->getContainer()->get(Services::KERNEL_METADATA_ACCESS_REGISTRY)
+        );
+    }
+
+    /**
+     * @return DbalCheckoutQuery
+     */
+    public function checkoutQuery(): DbalCheckoutQuery
+    {
+        return new DbalCheckoutQuery(
+            $this->getContainer()->get('database_connection')
         );
     }
 

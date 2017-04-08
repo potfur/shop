@@ -7,9 +7,3 @@ inventory:
     resource: "@ShopBundle/Controller/InventoryController.php"
     type:     annotation
     prefix:   /
-
-cart:
-    resource: "@ShopBundle/Controller/CartController.php"
-    type:     annotation
-    prefix:   /
-
