@@ -26,7 +26,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in itemForms %}
+                {% for item in items %}
                     <tr>
                         <td>{{ item.vars.value.metadata.name }} ({{ item.vars.value.sku }})</td>
                         <td>{{ item.vars.value.quantity }}</td>
@@ -34,7 +34,8 @@
                         <td>
                             {{ form_start(item) }}
                             {{ form_row(item.sku) }}
-                            <input type="submit" class="btn btn-primary" value="{{ 'customer.cart.list.remove'|trans }}">
+                            <input type="submit" class="btn btn-primary"
+                                   value="{{ 'customer.cart.action.remove'|trans }}">
                             {{ form_end(item) }}
                         </td>
                     </tr>
@@ -51,4 +52,11 @@
             </table>
         </div>
     </div>
+    {% if items %}
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="{{ url('dumplie_customer_checkout') }}" class="btn btn-primary">{{ 'customer.cart.go_to_checkout'|trans }}</a>
+        </div>
+    </div>
+    {%  endif %}
 {% endblock %}

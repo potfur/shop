@@ -91,6 +91,123 @@
                 <source>inventory.storage.metadata.form.visible.label</source>
                 <target>Visible</target>
             </trans-unit>
+
+
+            <trans-unit id="customer.product.form.quantity.label">
+                <source>customer.product.form.quantity.label</source>
+                <target>Quantity</target>
+            </trans-unit>
+            <trans-unit id="customer.product.form.add_to_cart">
+                <source>customer.product.form.add_to_cart</source>
+                <target>Add to cart</target>
+            </trans-unit>
+
+
+            <trans-unit id="customer.cart.list.header">
+                <source>customer.cart.list.header</source>
+                <target>Cart</target>
+            </trans-unit>
+            <trans-unit id="customer.cart.list.header.name">
+                <source>customer.cart.list.header.name</source>
+                <target>Item</target>
+            </trans-unit>
+            <trans-unit id="customer.cart.list.header.quantity">
+                <source>customer.cart.list.header.quantity</source>
+                <target>Quantity</target>
+            </trans-unit>
+            <trans-unit id="customer.cart.list.header.price">
+                <source>customer.cart.list.header.price</source>
+                <target>Price</target>
+            </trans-unit>
+            <trans-unit id="customer.cart.list.header.actions">
+                <source>customer.cart.list.header.actions</source>
+                <target/>
+            </trans-unit>
+            <trans-unit id="customer.cart.list.total">
+                <source>customer.cart.list.total</source>
+                <target>Total</target>
+            </trans-unit>
+            <trans-unit id="customer.cart.action.remove">
+                <source>customer.cart.action.remove</source>
+                <target>Remove</target>
+            </trans-unit>
+            <trans-unit id="customer.cart.go_to_checkout">
+                <source>customer.cart.go_to_checkout</source>
+                <target>Go to checkout</target>
+            </trans-unit>
+
+            <trans-unit id="customer.checkout.header">
+                <source>customer.checkout.header</source>
+                <target>Checkout</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.header.items">
+                <source>customer.checkout.header.items</source>
+                <target>Items</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.list.header.name">
+                <source>customer.checkout.list.header.name</source>
+                <target>Item</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.list.header.quantity">
+                <source>customer.checkout.list.header.quantity</source>
+                <target>Quantity</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.list.header.price">
+                <source>customer.checkout.list.header.price</source>
+                <target>Price</target>
+            </trans-unit>
+
+            <trans-unit id="customer.checkout.address.form.name.label">
+                <source>customer.checkout.address.form.name.label</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.form.street.label">
+                <source>customer.checkout.address.form.street.label</source>
+                <target>Street</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.form.postCode.label">
+                <source>customer.checkout.address.form.postCode.label</source>
+                <target>Post code</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.form.city.label">
+                <source>customer.checkout.address.form.city.label</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.form.countryCode.label">
+                <source>customer.checkout.address.form.countryCode.label</source>
+                <target>Country code</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.form.save.label">
+                <source>customer.checkout.address.form.save.label</source>
+                <target>Save</target>
+            </trans-unit>
+
+            <trans-unit id="customer.checkout.address.billing.label">
+                <source>customer.checkout.address.billing.label</source>
+                <target>Billing address</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.billing.change">
+                <source>customer.checkout.address.billing.change</source>
+                <target>Change</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.shipping.label">
+                <source>customer.checkout.address.shipping.label</source>
+                <target>Shipping address</target>
+            </trans-unit>
+            <trans-unit id="customer.checkout.address.shipping.change">
+                <source>customer.checkout.address.shipping.change</source>
+                <target>Change</target>
+            </trans-unit>
+
+            <trans-unit id="customer.checkout.place.order">
+                <source>customer.checkout.place.order</source>
+                <target>Place order</target>
+            </trans-unit>
+
+            <trans-unit id="customer.order.placed.header">
+                <source>customer.order.placed.header</source>
+                <target>Order placed</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
