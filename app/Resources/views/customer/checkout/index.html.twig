@@ -1,0 +1,67 @@
+{% extends ':customer:base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>{{ 'customer.checkout.header'|trans }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>{{ 'customer.checkout.header.items'|trans }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        {{ 'customer.checkout.list.header.name'|trans }}
+                    </th>
+                    <th>
+                        {{ 'customer.checkout.list.header.quantity'|trans }}
+                    </th>
+                    <th>
+                        {{ 'customer.checkout.list.header.price'|trans }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart.items %}
+                    <tr>
+                        <td>{{ item.metadata.name }} ({{ item.sku }})</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price|number_format(2, '.', ',') }} {{ item.currency }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>{{ 'customer.checkout.address.billing.label'|trans }}</h4>
+        </div>
+        <div class="col-lg-6">
+            <h4>{{ 'customer.checkout.address.shipping.label'|trans }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            {{ checkout.billingAddress }}
+            <br/>
+            <a href="{{ url('dumplie_customer_checkout_billing_address') }}" class="btn btn-primary">{{ 'customer.checkout.address.billing.change'|trans }}</a>
+        </div>
+        <div class="col-lg-6">
+            {{ checkout.shippingAddress }}
+            <br/>
+            <a href="{{ url('dumplie_customer_checkout_shipping_address') }}" class="btn btn-primary">{{ 'customer.checkout.address.shipping.change'|trans }}</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <a href="{{ url('dumplie_customer_checkout_place') }}" class="btn btn-primary">{{ 'customer.checkout.place.order'|trans }}</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends ':customer:base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>{{ 'customer.checkout.header'|trans }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>{{ 'customer.checkout.address.billing' }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        {{ form_start(form) }}
+        <div class="col-lg-6">
+            {{ form_row(form.name) }}
+            {{ form_row(form.street) }}
+            {{ form_row(form.postCode) }}
+            {{ form_row(form.city) }}
+            {{ form_row(form.countryCode) }}
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="{{ 'customer.checkout.form.save'|trans }}">
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends ':customer:base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>{{ 'customer.checkout.header'|trans }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>{{ 'customer.checkout.header.items'|trans }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        {{ 'customer.checkout.list.header.name'|trans }}
+                    </th>
+                    <th>
+                        {{ 'customer.checkout.list.header.quantity'|trans }}
+                    </th>
+                    <th>
+                        {{ 'customer.checkout.list.header.price'|trans }}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart.items %}
+                    <tr>
+                        <td>{{ item.metadata.name }} ({{ item.sku }})</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price|number_format(2, '.', ',') }} {{ item.currency }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4>{{ 'customer.checkout.address.shipping.label'|trans }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        {{ form_start(form) }}
+        <div class="col-lg-6">
+            {{ form_row(form.name) }}
+            {{ form_row(form.street) }}
+            {{ form_row(form.postCode) }}
+            {{ form_row(form.city) }}
+            {{ form_row(form.countryCode) }}
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="{{ 'customer.checkout.address.form.save.label'|trans }}">
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
