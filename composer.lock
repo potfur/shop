@@ -835,12 +835,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dumplie/dumplie.git",
-                "reference": "926c96c970a6574bafb71b771da983c0a0561eef"
+                "reference": "58c705bad0006c787c148c161d834e88bb07b2a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dumplie/dumplie/zipball/926c96c970a6574bafb71b771da983c0a0561eef",
-                "reference": "926c96c970a6574bafb71b771da983c0a0561eef",
+                "url": "https://api.github.com/repos/dumplie/dumplie/zipball/58c705bad0006c787c148c161d834e88bb07b2a3",
+                "reference": "58c705bad0006c787c148c161d834e88bb07b2a3",
                 "shasum": ""
             },
             "require": {
@@ -884,7 +884,7 @@
                 "MIT"
             ],
             "description": "Dumplie - simple but powerful shopping engine",
-            "time": "2016-10-12 09:01:12"
+            "time": "2017-05-05 06:55:05"
         },
         {
             "name": "incenteev/composer-parameter-handler",
