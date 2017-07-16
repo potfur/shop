@@ -38,8 +38,8 @@
     "scripts": {
         "test": [
             "@composer install",
-            "bin/console doctrine:database:drop --env=test --force --if-exists",
-            "bin/console doctrine:database:create --env=test",
+            "bin/console doctrine:database:create --env=test --if-not-exists",
+            "bin/console doctrine:schema:update --force --env=test",
             "bin/console dumplie:metadata:schema:alter --force --env=test",
             "phpunit"
         ],

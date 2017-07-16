@@ -12,12 +12,19 @@ matrix:
         - DB='mysql'
     - php: 7.0
       env:
+        - DB='mysql'
+    - php: 7.0
+      env:
+        - DEPENDENCIES='low'
+        - DB='pgsql'
+    - php: 7.0
+      env:
         - DB='pgsql'
 
 before_install:
   - composer self-update
-  - if [ "$DB" == "pgsql" ]; then cp etc/travis/parameters.pgsql.yml app/config/parameters.yml; fi;
-  - if [ "$DB" == "mysql" ]; then cp etc/travis/parameters.mysql.yml app/config/parameters.yml; fi;
+  - if [ "$DB" == "pgsql" ]; then cp etc/travis/parameters.pgsql.yml app/config/parameters.yml; psql -U postgres -c 'CREATE DATABASE "dumplie"'; psql -U postgres -c 'CREATE DATABASE "dumplie-test"'; fi;
+  - if [ "$DB" == "mysql" ]; then cp etc/travis/parameters.mysql.yml app/config/parameters.yml; mysql -e 'CREATE DATABASE `dumplie`'; mysql -e 'CREATE DATABASE `dumplie-test`'; fi;
 
 install:
   - export COMPOSER_ROOT_VERSION=dev-master
